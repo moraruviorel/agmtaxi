@@ -1,42 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, Directive, Input, OnInit } from '@angular/core';
+
+// import { AgmCoreModule } from 'angular2-google-maps/core';
+
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: [`./app.component.css`],
+  templateUrl: './app.component.html'
 })
+
+
 export class AppComponent {
-  title = 'My first AGM project';
-  lat = 51.678418;
-  lng = 7.809007;
-  zoom = 8;
-
-  markers: marker[] = [
-  {
-    lat: 51.673858,
-    lng: 7.815982,
-    label: 'A',
-    draggable: true
-  },
-  {
-    lat: 51.373858,
-    lng: 7.215982,
-    label: 'B',
-    draggable: false
-  },
-  {
-    lat: 51.723858,
-    lng: 7.895982,
-    label: 'C',
-    draggable: true
-  // tslint:disable-next-line:semicolon
-  }]
+  // google maps zoom level
+  zoom = 14;
+  // initial center position for the map
+  lat = 47.0490533;
+  lng = 28.863251;
+  //
+  clickedMarker(label: string, index: number) {
+    console.log(`clicked the marker: ${label || index}`);
+  }
+  markerDragEnd(m: marker, $event: MouseEvent) {
+    console.log('dragEnd', m, $event);
+  }
 }
-
+// just an interface for type safety.
 // tslint:disable-next-line:class-name
 interface marker {
   lat: number;
   lng: number;
-  label?: string;
-  draggable: boolean;
 }

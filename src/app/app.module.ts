@@ -1,24 +1,25 @@
-import { BrowserModule } from '@angular/platform-browser';
+
 import { NgModule } from '@angular/core';
-import { AgmCoreModule } from '@agm/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AgmCoreModule } from 'angular2-google-maps/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
+import { DirectionsMapDirective } from './app.directions_map_directive';
+
+
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
-     BrowserModule,
+    BrowserModule,
     CommonModule,
     FormsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCSCgYjxZokNoV5y1QX1_Y2s0c1z60lWdM'
-    })
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    }) ],
+  declarations: [ AppComponent, DirectionsMapDirective ],
+  bootstrap: [ AppComponent ],
+  providers: [ ],
 })
-export class AppModule { }
+export class AppModule {}
