@@ -1,12 +1,11 @@
 import { Directive, Input } from '@angular/core';
-import { GoogleMapsAPIWrapper } from 'angular2-google-maps/core/services/google-maps-api-wrapper';
-
+import { GoogleMapsAPIWrapper } from '@agm/core';
 
 declare var google: any;
 
 @Directive({
   // tslint:disable-next-line:directive-selector
-  selector: 'sebm-google-map-directions'
+  selector: 'agm-map-directions'
 })
 export class DirectionsMapDirective {
   @Input() origin;
@@ -14,29 +13,27 @@ export class DirectionsMapDirective {
   @Input() waypoints;
 
   constructor (public gmapsApi: GoogleMapsAPIWrapper) {}
-
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit() {
     this.gmapsApi.getNativeMap().then(map => {
-              const directionsService = new google.maps.DirectionsService;
-              const directionsDisplay = new google.maps.DirectionsRenderer;
+      const directionsService = new google.maps.DirectionsService;
+      const directionsDisplay = new google.maps.DirectionsRenderer;
 
-              directionsDisplay.setMap(map);
-              directionsService.route({
-                      // origin: {lat: 47.01419224, lng: 28.82770041},
-                      origin: {lat: 46.99372153, lng: 28.84769898},
-                      destination: {lat: 47.0242649, lng: 28.86690587},
-                      waypoints: this.waypoints,
-                      optimizeWaypoints: true,
-                      travelMode: 'DRIVING'
-                    }, function(response, status) {
-                                if (status === 'OK') {
-                                  directionsDisplay.setDirections(response);
-                                } else {
-                                  window.alert('Directions request failed due to ' + status);
-                                }
-              });
-
+      directionsDisplay.setMap(map);
+      directionsService.route({
+        origin: { lat: this.origin.Latitude, lng: this.origin.Longitude },
+        destination: { lat: this.destination.Latitude, lng: this.destination.Longitude },
+        waypoints: [], // this.waypoints,
+        optimizeWaypoints: true,
+        travelMode: 'DRIVING'
+      },
+      function(response, status) {
+        if (status === 'OK') {
+          directionsDisplay.setDirections(response);
+        } else {
+          window.alert('Directions request failed due to ' + status);
+        }
+      });
     });
   }
 }

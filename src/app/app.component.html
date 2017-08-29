@@ -1,6 +1,13 @@
 
 
-<sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
-  <sebm-google-map-directions [origin]="origin" [destination]="destination" [waypoints]="waypoints"></sebm-google-map-directions>
-</sebm-google-map>
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+    <agm-marker 
+      *ngFor="let w of waypoints; let i = index"          
+        [latitude]="w.Latitude"
+        [longitude]="w.Longitude"
+        
+    ></agm-marker>
+  <agm-map-directions [origin]="origin" [destination]="destination" [waypoints]="waypoints"></agm-map-directions>
+</agm-map>
 
+  
