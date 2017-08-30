@@ -1,11 +1,10 @@
 import { Component, Directive, Input, Output, OnInit } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
-// import { AgmCoreModule } from 'angular2-google-maps/core';
 import { WaypointService } from './waypoint.serve';
 import { Waypoint } from './waypoint';
 import 'rxjs/add/operator/toPromise';
-// import 'rxjs/add/operator/then';
+
 
 @Component({
   selector: 'app-root',
@@ -25,28 +24,16 @@ export class AppComponent implements OnInit {
   @Output() destination: Waypoint;
   @Input() waypoints: Waypoint[];
 
-  constructor( private waypointService: WaypointService ) {}
-
-  getWaypoints(): void {
-    this.waypointService
-        .getWaypoints()
-        .then(heroes => this.waypoints = heroes);
-  }
+  constructor(private waypointService: WaypointService) { }
 
   ngOnInit(): void {
     this.waypoints = [];
 
-    this.getWaypoints();
-    console.log(this.waypoints);
-    //  for (const point of this.waypoints) {
-    //    console.log(point);
-    //  }
-
-    // this.waypoints.forEach(function (item) {
-    //   console.log(item);
-    // });
-
-    this.origin = { Latitude: 46.99372153, Longitude: 28.84769898 };
-    this.destination = {Latitude: 47.0242649, Longitude: 28.86690587 };
+    this.waypointService.getWaypointsLocaly()
+      .then(waypoints => {
+        this.waypoints = waypoints;
+        this.origin=this.waypoints[0];
+        this.destination=this.waypoints[this.waypoints.length-1]}
+      );
   }
 }
