@@ -1,4 +1,4 @@
-export class Waypoint {
+export class MobileDeviceData {
 
 Latitude: number;
 Longitude: number;
