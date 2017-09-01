@@ -31,10 +31,8 @@ export class DirectionsMapDirective {
       const directionsService = new google.maps.DirectionsService;
       const directionsDisplay = new google.maps.DirectionsRenderer;
       this.waypoints = [];
-
-      console.log(this.mobileDeviceData);
       this.setData();
-      console.log(this.origin);
+
       if ( this.origin != null && this.destination != null && this.waypoints != null) {
         directionsDisplay.setMap(map);
         directionsService.route({
