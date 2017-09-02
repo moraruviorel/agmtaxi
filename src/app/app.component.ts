@@ -1,4 +1,5 @@
-import { Component, Directive, Input, Output, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AppSettings } from './app.settings';
 
 @Component({
   selector: 'app-root',
@@ -6,12 +7,10 @@ import { Component, Directive, Input, Output, OnInit } from '@angular/core';
   templateUrl: './app.component.html'
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent {
   // google maps zoom level
-  zoom = 14;
+  zoom = AppSettings.Zoom;
   // initial center position for the map
-  lat = 47.0490533;
-  lng = 28.863251;
-  //
-  ngOnInit() {}
+  lat = AppSettings.Center_Point_Lat;
+  lng = AppSettings.Center_Point_Lng;
 }

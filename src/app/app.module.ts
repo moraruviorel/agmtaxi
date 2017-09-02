@@ -9,6 +9,7 @@ import { HttpModule } from '@angular/http';
 import { WaypointService } from './waypoint.serve';
 import { AppComponent } from './app.component';
 import { DirectionsMapDirective } from './app.directions_map_directive';
+import { ReloadComponent } from './app.reload';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { DirectionsMapDirective } from './app.directions_map_directive';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCSCgYjxZokNoV5y1QX1_Y2s0c1z60lWdM'
     }) ],
-  declarations: [ DirectionsMapDirective, AppComponent ],
+  declarations: [ DirectionsMapDirective, AppComponent, ReloadComponent ],
   bootstrap: [ AppComponent ],
   providers: [ WaypointService ],
 })
