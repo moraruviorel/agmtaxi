@@ -5,11 +5,13 @@ import { AgmCoreModule } from '@agm/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RouterModule } from '@angular/router';
 
-import { WaypointService } from './waypoint.serve';
+import { MobileDeviceTraceService } from './mobile_device_trace.serve';
 import { AppComponent } from './app.component';
 import { DirectionsMapDirective } from './app.directions_map_directive';
-import { ReloadComponent } from './app.reload';
+import { AppSettings } from './app.settings';
+import { OrderComponent } from './order.component';
 
 @NgModule({
   imports: [
@@ -17,11 +19,15 @@ import { ReloadComponent } from './app.reload';
     BrowserModule,
     CommonModule,
     FormsModule,
+    RouterModule.forRoot([
+      { path: '', redirectTo: 'order/', pathMatch: 'full'},
+      { path: 'order/:id', component: OrderComponent }
+    ]),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCSCgYjxZokNoV5y1QX1_Y2s0c1z60lWdM'
+      apiKey: AppSettings.Api_Key
     }) ],
-  declarations: [ DirectionsMapDirective, AppComponent, ReloadComponent ],
+  declarations: [ DirectionsMapDirective, AppComponent, OrderComponent ],
   bootstrap: [ AppComponent ],
-  providers: [ WaypointService ],
+  providers: [ MobileDeviceTraceService ],
 })
 export class AppModule {}

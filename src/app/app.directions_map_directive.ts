@@ -1,11 +1,8 @@
 import { Directive, Input } from '@angular/core';
 import { GoogleMapsAPIWrapper } from '@agm/core';
 
-import { MobileDeviceData } from './mobile_device_data';
-import { AppComponent } from './app.component';
-import { WaypointService } from './waypoint.serve';
-
-import 'rxjs/add/operator/toPromise';
+import { MobileDeviceTrace } from './mobile_device_trace';
+import { MobileDeviceTraceService } from './mobile_device_trace.serve';
 
 declare var google: any;
 
@@ -14,18 +11,18 @@ declare var google: any;
   selector: 'agm-map-directions'
 })
 export class DirectionsMapDirective {
-  // @Input() mobileDeviceData;
+  @Input() orderId;
 
   private origin;
   private destination;
   private waypoints;
-  private mobileDeviceData: MobileDeviceData[];
+  private mobileDeviceData: MobileDeviceTrace[];
 
-  constructor (public gmapsApi: GoogleMapsAPIWrapper, private waypointService: WaypointService) {}
+  constructor (public gmapsApi: GoogleMapsAPIWrapper, private mdtService: MobileDeviceTraceService) {}
   // tslint:disable-next-line:use-life-cycle-interface
   async ngOnInit() {
 
-    this.mobileDeviceData = await this.waypointService.getPoints();
+    this.mobileDeviceData = await this.mdtService.getPoints(this.orderId);
 
     this.gmapsApi.getNativeMap().then(map => {
       const directionsService = new google.maps.DirectionsService;
@@ -33,7 +30,7 @@ export class DirectionsMapDirective {
       this.waypoints = [];
       this.setData();
 
-      if ( this.origin != null && this.destination != null && this.waypoints != null) {
+      if (this.origin != null && this.destination != null && this.waypoints != null) {
         directionsDisplay.setMap(map);
         directionsService.route({
           origin: { lat: this.origin.Latitude, lng: this.origin.Longitude },
@@ -66,12 +63,4 @@ export class DirectionsMapDirective {
       }
     }
   }
-
-  async getWaypoints() {
-    this.waypointService.getPoints()
-      .then(res => {
-        this.mobileDeviceData = res;
-    });
-  }
-
 }
